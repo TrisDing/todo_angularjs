@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+<head>
+    <title>Todo</title>
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/todo.css">
+</head>
+<body>
+
+<div class="container" id="todo-app" ng-controller="TodoCtrl">
+
+    <header>
+        <h1>Todos</h1>
+        <form ng-submit="addTodo()">
+            <input type="text" ng-model="newTodoText" placeholder="What needs to be done?"/>
+        </form>
+    </header>
+
+    <section id="main" ng-show="todos.length > 0">
+        <ul id="todo-list">
+            <li class="edit-{{todo.editing}}" ng-repeat="todo in todos">
+                <div ng-dblclick="editTodo(todo)" ng-hide="todo.editing">
+                    <input type="checkbox" ng-model="todo.done"/>
+                    <span class="done-{{todo.done}}">{{todo.title}}</span>
+                    <a class="destroy" ng-click="removeTodo(todo)"><i class="icon-trash"></i></a>
+                </div>
+                <form class="edit" ng-submit="finishEditing(todo)">
+                    <input type="text" ng-show="todo.editing" ng-model="todo.title"
+                           my-focus="todo.editing" my-blur="finishEditing(todo)" />
+                </form>
+            </li>
+        </ul>
+    </section>
+
+    <footer ng-show="todos.length > 0">
+        <a class="btn btn-primary" id="clear-completed" ng-click="clearCompleted()" ng-show="done().length > 0">
+            Clear {{done().length}} completed items
+        </a>
+        <div class="todo-count"><b>{{remaining().length}}</b> items left</div>
+    </footer>
+
+</div>
+
+<div id="instructions">
+    Double-click to edit a todo.
+</div>
+
+<div id="credits">
+    Built with <a href="http://angularjs.org/">Angular.js</a>
+    and <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a>
+</div>
+
+<!-- Scripts -->
+<script type="text/javascript" src="js/lib/angular.js"></script>
+<script type="text/javascript" src="js/lib/underscore.js"></script>
+<script type="text/javascript" src="js/todo.js"></script>
+
+</body>
+</html>
